@@ -25,9 +25,6 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-// Replace json
-var json = jsoniter.ConfigCompatibleWithStandardLibrary
-
 // ErrWSAlreadyOpen is thrown when you attempt to open
 // a websocket that already is open.
 var ErrWSAlreadyOpen = errors.New("web socket already opened")
@@ -120,6 +117,8 @@ func (s *Session) Open() error {
 	s.log(LogInformational, "Op 10 Hello Packet received from Discord")
 	s.LastHeartbeatAck = time.Now().UTC()
 	var h helloOp
+	// Replace json
+	json = jsoniter.ConfigCompatibleWithStandardLibrary
 	if err = json.Unmarshal(e.RawData, &h); err != nil {
 		err = fmt.Errorf("error unmarshalling helloOp, %s", err)
 		return err
@@ -475,6 +474,8 @@ func (s *Session) onEvent(messageType int, message []byte) (*Event, error) {
 
 	// Decode the event into an Event struct.
 	var e *Event
+	// Replace json
+	json = jsoniter.ConfigCompatibleWithStandardLibrary
 	decoder := json.NewDecoder(reader)
 	if err = decoder.Decode(&e); err != nil {
 		s.log(LogError, "error decoding websocket message, %s", err)
