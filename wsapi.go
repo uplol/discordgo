@@ -13,7 +13,7 @@ package discordgo
 import (
 	"bytes"
 	"compress/zlib"
-	"encoding/json"
+	"github.com/json-iterator/go"
 	"errors"
 	"fmt"
 	"io"
@@ -24,6 +24,9 @@ import (
 
 	"github.com/gorilla/websocket"
 )
+
+// Replace json
+var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 // ErrWSAlreadyOpen is thrown when you attempt to open
 // a websocket that already is open.
