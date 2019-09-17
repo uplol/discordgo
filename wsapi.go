@@ -13,7 +13,6 @@ package discordgo
 import (
 	"bytes"
 	"compress/zlib"
-	"github.com/json-iterator/go"
 	"errors"
 	"fmt"
 	"io"
@@ -25,7 +24,7 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-var json = jsoniter.ConfigCompatibleWithStandardLibrary
+
 
 // ErrWSAlreadyOpen is thrown when you attempt to open
 // a websocket that already is open.
@@ -76,6 +75,7 @@ func (s *Session) Open() error {
 		s.gateway = s.gateway + "?v=" + APIVersion + "&encoding=json"
 	}
 
+
 	// Connect to the Gateway
 	s.log(LogInformational, "connecting to gateway %s", s.gateway)
 	header := http.Header{}
@@ -119,7 +119,7 @@ func (s *Session) Open() error {
 	s.log(LogInformational, "Op 10 Hello Packet received from Discord")
 	s.LastHeartbeatAck = time.Now().UTC()
 	var h helloOp
-	if err = json.Unmarshal(e.RawData, &h); err != nil {
+	if err = Json.Unmarshal(e.RawData, &h); err != nil {
 		err = fmt.Errorf("error unmarshalling helloOp, %s", err)
 		return err
 	}
@@ -449,6 +449,7 @@ func (s *Session) RequestGuildMembers(guildID, query string, limit int) (err err
 // "OnEvent" event then all events will be passed to that handler.
 func (s *Session) onEvent(messageType int, message []byte) (*Event, error) {
 
+
 	var err error
 	var reader io.Reader
 	reader = bytes.NewBuffer(message)
@@ -474,7 +475,7 @@ func (s *Session) onEvent(messageType int, message []byte) (*Event, error) {
 
 	// Decode the event into an Event struct.
 	var e *Event
-	decoder := json.NewDecoder(reader)
+	decoder := Json.NewDecoder(reader)
 	if err = decoder.Decode(&e); err != nil {
 		s.log(LogError, "error decoding websocket message, %s", err)
 		return e, err

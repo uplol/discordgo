@@ -10,10 +10,10 @@
 package discordgo
 
 import (
-	"encoding/json"
 	"net/http"
 	"time"
 )
+
 
 // Timestamp stores a timestamp, as sent by the Discord API.
 type Timestamp string
@@ -44,7 +44,7 @@ func newRestError(req *http.Request, resp *http.Response, body []byte) *RESTErro
 
 	// Attempt to decode the error and assume no message was provided if it fails
 	var msg *APIErrorMessage
-	err := json.Unmarshal(body, &msg)
+	err := Json.Unmarshal(body, &msg)
 	if err == nil {
 		restErr.Message = msg
 	}

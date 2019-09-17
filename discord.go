@@ -16,9 +16,12 @@ package discordgo
 import (
 	"errors"
 	"fmt"
+	jsoniter "github.com/json-iterator/go"
 	"net/http"
 	"time"
 )
+
+var Json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 // VERSION of DiscordGo, follows Semantic Versioning. (http://semver.org/)
 const VERSION = "0.19.0"

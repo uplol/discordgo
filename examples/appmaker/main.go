@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/bwmarrin/discordgo"
+	"github.com/uplol/discordgo"
 )
 
 // Variables used for command line options

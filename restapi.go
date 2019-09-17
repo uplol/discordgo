@@ -12,7 +12,6 @@ package discordgo
 
 import (
 	"bytes"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"image"
@@ -50,7 +49,7 @@ func (s *Session) Request(method, urlStr string, data interface{}) (response []b
 func (s *Session) RequestWithBucketID(method, urlStr string, data interface{}, bucketID string) (response []byte, err error) {
 	var body []byte
 	if data != nil {
-		body, err = json.Marshal(data)
+		body, err = Json.Marshal(data)
 		if err != nil {
 			return
 		}
@@ -144,7 +143,7 @@ func (s *Session) RequestWithLockedBucket(method, urlStr, contentType string, b 
 		}
 	case 429: // TOO MANY REQUESTS - Rate limiting
 		rl := TooManyRequests{}
-		err = json.Unmarshal(response, &rl)
+		err = Json.Unmarshal(response, &rl)
 		if err != nil {
 			s.log(LogError, "rate limit unmarshal error, %s", err)
 			return
@@ -171,7 +170,7 @@ func (s *Session) RequestWithLockedBucket(method, urlStr, contentType string, b 
 }
 
 func unmarshal(data []byte, v interface{}) error {
-	err := json.Unmarshal(data, v)
+	err := Json.Unmarshal(data, v)
 	if err != nil {
 		return ErrJSONUnmarshal
 	}
@@ -1526,7 +1525,7 @@ func (s *Session) ChannelMessageSendComplex(channelID string, data *MessageSend)
 		bodywriter := multipart.NewWriter(body)
 
 		var payload []byte
-		payload, err = json.Marshal(data)
+		payload, err = Json.Marshal(data)
 		if err != nil {
 			return
 		}

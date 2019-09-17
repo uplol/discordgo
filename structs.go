@@ -12,7 +12,6 @@
 package discordgo
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"sync"
@@ -578,7 +577,7 @@ func (t *TimeStamps) UnmarshalJSON(b []byte) error {
 		End   float64 `json:"end,omitempty"`
 		Start float64 `json:"start,omitempty"`
 	}{}
-	err := json.Unmarshal(b, &temp)
+	err := Json.Unmarshal(b, &temp)
 	if err != nil {
 		return err
 	}

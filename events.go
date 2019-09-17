@@ -1,8 +1,6 @@
 package discordgo
 
-import (
-	"encoding/json"
-)
+import jsoniter "github.com/json-iterator/go"
 
 // This file contains all the possible structs that can be
 // handled by AddHandler/EventHandler.
@@ -29,7 +27,7 @@ type Event struct {
 	Operation int             `json:"op"`
 	Sequence  int64           `json:"s"`
 	Type      string          `json:"t"`
-	RawData   json.RawMessage `json:"d"`
+	RawData   jsoniter.RawMessage `json:"d"`
 	// Struct contains one of the other types in this file.
 	Struct interface{} `json:"-"`
 }
